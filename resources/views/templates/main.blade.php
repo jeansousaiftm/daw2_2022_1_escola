@@ -23,6 +23,18 @@
 				</div>
 			</nav>
 			
+			@if (Session::get("status") == "salvo")
+				<div class="alert alert-success">
+					Salvo com sucesso!
+				</div>
+			@endif
+			
+			@if (Session::get("status") == "excluido")
+				<div class="alert alert-danger">
+					Excluído com sucesso!
+				</div>
+			@endif
+			
 			@yield("formulario")
 			@yield("tabela")
 			
