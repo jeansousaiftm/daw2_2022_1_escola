@@ -21,6 +21,13 @@ class CursoController extends Controller
 	
     public function store(Request $request)
     {
+		$request->validate([
+			"nome" => "required|max:100"
+		], [
+			"nome.required" => "O campo nome é obrigatório",
+			"nome.max" => "O campo nome aceita no máximo :max caracteres"
+		]);
+		
         if ($request->get("id") != "") {
 			$curso = Curso::Find($request->get("id"));
 		} else {

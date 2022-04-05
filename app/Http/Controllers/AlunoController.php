@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Aluno;
+use App\Models\Curso;
 
 class AlunoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $aluno = new Aluno();
+		$alunos = Aluno::All();
+		$cursos = Curso::All();
+		return view("aluno.index", [
+			"aluno" => $aluno,
+			"alunos" => $alunos,
+			"cursos" => $cursos
+		]);
     }
 
     /**
