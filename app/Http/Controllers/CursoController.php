@@ -3,16 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Curso;
 
 class CursoController extends Controller
 {
-
+	
+	public function listaCursos() {
+	
+		// SELECT c.*, COUNT(a.id) AS total_alunos FROM curso AS c LEFT JOIN aluno AS a ON c.id = a.curso_id GROUP BY c.id
+	
+		return DB::table("curso AS c")
+			->leftJoin("aluno AS a", "c.id", "=", "a.curso_id")
+			->select("c.id", "c.nome", DB::raw("COUNT(a.id) AS total_alunos"))
+			->groupBy("c.id", "c.nome")
+			->get();
+	}
+	
     public function index()
     {
 		$curso = new Curso();
-		$cursos = Curso::All();
+		$cursos = $this->listaCursos();
         return view("curso.index", [
 			"curso" => $curso,
 			"cursos" => $cursos
@@ -42,7 +53,7 @@ class CursoController extends Controller
     public function edit($id)
     {
         $curso = Curso::Find($id);
-		$cursos = Curso::All();
+		$cursos = $this->listaCursos();
 		return view("curso.index", [
 			"curso" => $curso,
 			"cursos" => $cursos

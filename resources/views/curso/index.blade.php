@@ -57,13 +57,21 @@
 						</a>
 					</td>
 					<td>
-						<form method="POST" action="/curso/{{ $curso->id }}">
-							@csrf
-							<input type="hidden" name="_method" value="DELETE" />
-							<button type="button" class="btn btn-danger" onclick="excluir(this);">
-								<i class="bi bi-trash"></i> Excluir
-							</button>
-						</form>
+						@if ($curso->total_alunos > 0)
+							
+							Curso não pode ser excluído pois tem alunos vinculados.
+							
+						@else
+							
+							<form method="POST" action="/curso/{{ $curso->id }}">
+								@csrf
+								<input type="hidden" name="_method" value="DELETE" />
+								<button type="button" class="btn btn-danger" onclick="excluir(this);">
+									<i class="bi bi-trash"></i> Excluir
+								</button>
+							</form>
+							
+						@endif
 					</td>
 				</tr>
 			@endforeach

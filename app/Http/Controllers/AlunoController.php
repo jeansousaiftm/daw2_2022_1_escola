@@ -40,6 +40,11 @@ class AlunoController extends Controller
 		$aluno->nome = $request->get("nome");
 		$aluno->email = $request->get("email");
 		$aluno->curso_id = $request->get("curso_id");
+		
+		if ($request->file("foto") != null) {
+			$aluno->foto = $request->file("foto")->store("public/alunos");
+		}
+		
 		$aluno->save();
 		
 		$request->session()->flash("status", "salvo");
